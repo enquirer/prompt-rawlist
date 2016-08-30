@@ -1,36 +1,30 @@
-/**
- * `rawlist` type prompt
- */
+'use strict';
 
 var util = require('util');
-var BasePrompt = require('enquirer-prompt');
-var Separator = require('enquirer-separator');
+var log = require('log-utils');
+var Prompt = require('prompt-base');
 var Paginator = require('terminal-paginator');
 var isNumber = require('is-number');
-var log = require('log-utils');
 
 /**
  * Constructor
  */
 
-function Prompt() {
-  BasePrompt.apply(this, arguments);
+function RawList(/*question, answers, rl*/) {
+  Prompt.apply(this, arguments);
 
   if (!this.question.choices) {
     throw new TypeError('expected choices to be an array');
   }
 
-  this.question.validChoices = this.question.choices.filter(Separator.exclude);
-  this.rawDefault = 0;
   this.selected = 0;
-
   this.question.validate = function(val) {
     return val != null;
   };
 
   var idx = this.question.default;
   if (isNumber(idx) && idx >= 0 && idx < this.question.choices.realLength) {
-    this.selected = this.rawDefault = idx;
+    this.selected = idx;
   }
 
   // Make sure no default is set (so it won't be printed)
@@ -39,30 +33,20 @@ function Prompt() {
 }
 
 /**
- * Inherit `BasePrompt`
+ * Inherit `Prompt`
  */
 
-util.inherits(Prompt, BasePrompt);
+util.inherits(RawList, Prompt);
 
 /**
  * Start the prompt session
  * @param  {Function} `cb` Callback when prompt is finished
- * @return {Object} Returns the `Prompt` instance
+ * @return {Object} Returns the `RawList` instance
  */
 
-Prompt.prototype.ask = function(cb) {
-  var self = this;
+RawList.prototype.ask = function(cb) {
   this.callback = cb;
-
-  this.ui.on('line', function(e) {
-    var event = self.getCurrentValue(e);
-    if (!event || event.value === 'help' || !event.value) {
-      self.onError(event);
-    } else {
-      self.onSubmit(event);
-    }
-  });
-
+  this.ui.on('line', this.onEnter.bind(this));
   this.ui.on('keypress', this.onKeypress.bind(this));
   this.render();
   return this;
@@ -72,15 +56,15 @@ Prompt.prototype.ask = function(cb) {
  * Render the prompt to the terminal
  */
 
-Prompt.prototype.render = function(error) {
-  var message = this.message;
+RawList.prototype.render = function(error) {
   var append = error ? (append = '\n' + log.red('>> ') + error) : '';
+  var message = this.message;
 
   if (this.status === 'answered') {
     message += log.cyan(this.answer);
   } else {
-    var choicesStr = renderChoices(this.question.choices, this.selected);
-    message += this.paginator.paginate(choicesStr, this.selected, this.question.pageSize);
+    var choicesStr = renderChoices(this.question.choices.items, this.selected);
+    message += this.paginator.paginate(choicesStr, this.selected, this.options.pageSize);
     message += '\n  Answer: ';
   }
 
@@ -89,10 +73,10 @@ Prompt.prototype.render = function(error) {
 };
 
 /**
- * When user press a key
+ * When user presses a key
  */
 
-Prompt.prototype.onKeypress = function() {
+RawList.prototype.onKeypress = function() {
   var idx = this.rl.line.length ? Number(this.rl.line) - 1 : 0;
   if (this.question.choices.getChoice(idx)) {
     this.selected = idx;
@@ -106,36 +90,30 @@ Prompt.prototype.onKeypress = function() {
  * When user presses the `enter` key
  */
 
-Prompt.prototype.onSubmit = function(state) {
+RawList.prototype.onEnter = function(idx) {
+  var input = this.question.choices.getChoice(idx - 1);
+  if (typeof input === 'undefined' || input.value === 'help' || !input.value) {
+    return this.onError(input);
+  }
+  this.answer = this.getAnswer(input);
   this.status = 'answered';
-  this.answer = state.value;
-  this.render();
-  this.ui.write();
-  this.callback(state.value);
+  this.submitAnswer();
 };
 
 /**
  * When `error` is emitted.
  */
 
-Prompt.prototype.onError = function() {
+RawList.prototype.onError = function() {
   this.render('Please enter a valid index');
 };
 
 /**
- * Get the currently defined value
+ * Get the answer value.
  */
 
-Prompt.prototype.getCurrentValue = function(input) {
-  if (!input) {
-    input = this.rawDefault;
-  } else if (isNumber(input)) {
-    input -= 1;
-  } else {
-    return {isValid: false, value: null};
-  }
-  var choice = this.question.choices.getChoice(input);
-  return choice || {isValid: false, value: null};
+RawList.prototype.getAnswer = function(input) {
+  return input.value;
 };
 
 /**
@@ -158,19 +136,26 @@ function renderChoices(choices, idx) {
       return;
     }
 
-    var index = i - separatorOffset;
-    var display = (index + 1) + ') ' + choice.name;
-    if (index === idx) {
+    var num = i - separatorOffset;
+    var display = formatNumber(num, choice.name);
+    if (num === idx) {
       display = log.cyan(display);
     }
     output += display;
   });
-
   return output;
+}
+
+/**
+ * Format the list numbers: "1) foo"
+ */
+
+function formatNumber(idx, choiceName) {
+  return (idx + 1) + ') ' + choiceName;
 }
 
 /**
  * Module exports
  */
 
-module.exports = Prompt;
+module.exports = RawList;
