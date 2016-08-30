@@ -1,17 +1,18 @@
 {
   "name": "enquirer-prompt-rawlist",
-  "description": "Rawlist prompt plugin for Enquirer.",
+  "description": "Adds `rawlist` prompt support to [Enquirer].",
   "version": "0.1.0",
-  "homepage": "https://github.com/jonschlinkert/enquirer-prompt-rawlist",
+  "homepage": "https://github.com/enquirer/enquirer-prompt-rawlist",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
-  "repository": "jonschlinkert/enquirer-prompt-rawlist",
+  "repository": "enquirer/enquirer-prompt-rawlist",
   "bugs": {
-    "url": "https://github.com/jonschlinkert/enquirer-prompt-rawlist/issues"
+    "url": "https://github.com/enquirer/enquirer-prompt-rawlist/issues"
   },
   "license": "MIT",
   "files": [
     "index.js",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "main": "index.js",
   "engines": {
@@ -19,6 +20,17 @@
   },
   "scripts": {
     "test": "mocha"
+  },
+  "dependencies": {
+    "choices-separator": "^0.1.0",
+    "is-number": "^2.1.0",
+    "log-utils": "^0.2.1",
+    "prompt-base": "^0.3.2",
+    "terminal-paginator": "^0.1.0"
+  },
+  "devDependencies": {
+    "enquirer": "^0.2.0",
+    "gulp-format-md": "^0.1.10"
   },
   "keywords": [
     "answer",
@@ -28,6 +40,7 @@
     "choice",
     "cli",
     "command",
+    "enquirer",
     "enquirerprompt",
     "input",
     "inquire",
@@ -38,8 +51,8 @@
     "password",
     "prompt",
     "prompts",
-    "rawlist",
     "question",
+    "rawlist",
     "readline",
     "stdin",
     "stdout",
@@ -47,8 +60,35 @@
     "tty",
     "ui"
   ],
-  "dependencies": {
-    "is-number": "^2.1.0",
-    "log-utils": "^0.2.1"
+  "verb": {
+    "toc": false,
+    "layout": "common-minimal",
+    "data": {
+      "alias": "rawlist"
+    },
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "enquirer-prompt-checkbox",
+        "enquirer-prompt-confirm",
+        "enquirer-prompt-list",
+        "enquirer-prompt-radio",
+        "prompt-base",
+        "prompt-question"
+      ]
+    },
+    "reflinks": [
+      "enquirer",
+      "verb",
+      "verb-generate-readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
