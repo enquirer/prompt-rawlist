@@ -1,15 +1,15 @@
-# enquirer-prompt-rawlist [![NPM version](https://img.shields.io/npm/v/enquirer-prompt-rawlist.svg?style=flat)](https://www.npmjs.com/package/enquirer-prompt-rawlist) [![NPM downloads](https://img.shields.io/npm/dm/enquirer-prompt-rawlist.svg?style=flat)](https://npmjs.org/package/enquirer-prompt-rawlist)
+# prompt-rawlist [![NPM version](https://img.shields.io/npm/v/prompt-rawlist.svg?style=flat)](https://www.npmjs.com/package/prompt-rawlist) [![NPM downloads](https://img.shields.io/npm/dm/prompt-rawlist.svg?style=flat)](https://npmjs.org/package/prompt-rawlist)
 
-> Adds `rawlist` prompt support to [Enquirer](https://github.com/jonschlinkert/enquirer).
+> Rawlist prompt. Can be used as a standalone prompt, or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer).
 
-![rawlist prompt example](https://raw.githubusercontent.com/enquirer/enquirer-prompt-rawlist/master/example.gif)
+![prompt-rawlist example](https://raw.githubusercontent.com/enquirer/prompt-rawlist/master/example.gif)
 
 ## Install
 
 Install with [npm](https://www.npmjs.com/):
 
 ```sh
-$ npm install --save enquirer-prompt-rawlist
+$ npm install --save prompt-rawlist
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ $ npm install --save enquirer-prompt-rawlist
 var Enquirer = require('enquirer');
 var enquirer = new Enquirer();
 
-enquirer.register('rawlist', require('enquirer-prompt-rawlist'));
+enquirer.register('rawlist', require('prompt-rawlist'));
 
 enquirer.question('dinner', 'What would you like to do?', {
   type: 'rawlist',
@@ -52,7 +52,7 @@ Define questions using a declarative style, like Inquirer.
 var Enquirer = require('enquirer');
 var enquirer = new Enquirer();
 
-enquirer.register('rawlist', require('enquirer-prompt-rawlist'));
+enquirer.register('rawlist', require('prompt-rawlist'));
 
 var questions = [
   {
@@ -89,11 +89,12 @@ Based on the `rawlist` prompt in inquirer.
 
 ### Related projects
 
-* [enquirer-prompt-checkbox](https://www.npmjs.com/package/enquirer-prompt-checkbox): Adds checkbox prompt support to Enquirer. | [homepage](https://github.com/enquirer/enquirer-prompt-checkbox "Adds checkbox prompt support to Enquirer.")
-* [enquirer-prompt-confirm](https://www.npmjs.com/package/enquirer-prompt-confirm): Adds `confirm` (yes/no) prompt support to Enquirer. | [homepage](https://github.com/enquirer/enquirer-prompt-confirm "Adds `confirm` (yes/no) prompt support to Enquirer.")
-* [enquirer-prompt-radio](https://www.npmjs.com/package/enquirer-prompt-radio): Adds `radio` prompt support to Enquirer. This prompt behaves like other radio-button interfaces, where only… [more](https://github.com/enquirer/enquirer-prompt-radio) | [homepage](https://github.com/enquirer/enquirer-prompt-radio "Adds `radio` prompt support to Enquirer. This prompt behaves like other radio-button interfaces, where only one choice is enabled whilst all others are disabled.")
 * [prompt-base](https://www.npmjs.com/package/prompt-base): Base prompt module used for creating custom prompt types for Enquirer. | [homepage](https://github.com/enquirer/prompt-base "Base prompt module used for creating custom prompt types for Enquirer.")
+* [prompt-checkbox](https://www.npmjs.com/package/prompt-checkbox): Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer). | [homepage](https://github.com/enquirer/prompt-checkbox "Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer].")
+* [prompt-confirm](https://www.npmjs.com/package/prompt-confirm): Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer). | [homepage](https://github.com/enquirer/prompt-confirm "Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer].")
+* [prompt-list](https://www.npmjs.com/package/prompt-list): List-style prompt. Can be used as a standalone prompt, or with a prompt system like… [more](https://github.com/enquirer/prompt-list) | [homepage](https://github.com/enquirer/prompt-list "List-style prompt. Can be used as a standalone prompt, or with a prompt system like [Enquirer].")
 * [prompt-question](https://www.npmjs.com/package/prompt-question): Question object, used by Enquirer and prompt plugins. | [homepage](https://github.com/enquirer/prompt-question "Question object, used by Enquirer and prompt plugins.")
+* [prompt-radio](https://www.npmjs.com/package/prompt-radio): Radio prompt. This prompt behaves like other radio-button interfaces, where only one choice is enabled… [more](https://github.com/enquirer/prompt-radio) | [homepage](https://github.com/enquirer/prompt-radio "Radio prompt. This prompt behaves like other radio-button interfaces, where only one choice is enabled whilst all others are disabled. Can be used as a standalone prompt, or with a prompt system like [Enquirer].")
 
 ### Contributing
 
@@ -117,8 +118,8 @@ $ npm install -d && npm test
 ### License
 
 Copyright © 2016, [Jon Schlinkert](https://github.com/jonschlinkert).
-Released under the [MIT license](https://github.com/enquirer/enquirer-prompt-rawlist/blob/master/LICENSE).
+Released under the [MIT license](https://github.com/enquirer/prompt-rawlist/blob/master/LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.1.30, on August 30, 2016._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.1.31, on October 13, 2016._
