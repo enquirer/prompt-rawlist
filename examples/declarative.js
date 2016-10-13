@@ -4,7 +4,6 @@ var Enquirer = require('enquirer');
 var enquirer = new Enquirer();
 
 enquirer.register('rawlist', require('..'));
-
 var questions = [
   {
     type: 'rawlist',
