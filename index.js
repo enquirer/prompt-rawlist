@@ -82,6 +82,8 @@ RawList.prototype.onKeypress = function() {
     this.selected = idx;
   } else {
     this.selected = undefined;
+    this.render('invalid option');
+    return;
   }
   this.render();
 };
