@@ -12,7 +12,7 @@ var questions = [
     choices: [
       'Order a pizza',
       'Make a reservation',
-      enquirer.separator(),,
+      enquirer.separator(),
       'Ask opening hours',
       'Talk to the receptionist'
     ]
