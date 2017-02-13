@@ -46,8 +46,8 @@ util.inherits(RawList, Prompt);
 
 RawList.prototype.ask = function(cb) {
   this.callback = cb;
-  this.ui.on('line', this.onEnter.bind(this));
-  this.ui.on('keypress', this.onKeypress.bind(this));
+  this.only('line', this.onEnter.bind(this));
+  this.only('keypress', this.onKeypress.bind(this));
   this.render();
   return this;
 };
