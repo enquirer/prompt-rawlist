@@ -10,11 +10,14 @@ var isNumber = require('is-number');
  * Constructor
  */
 
-function RawList(/*question, answers, rl*/) {
+function RawList(question, answers, rl) {
+  if (!(this instanceof RawList)) {
+    return new RawList(question, answers, rl);
+  }
   Prompt.apply(this, arguments);
 
-  if (!this.question.choices) {
-    throw new TypeError('expected choices to be an array');
+  if (!this.choices) {
+    throw new TypeError('expected "options.choices" to be an object or array');
   }
 
   this.selected = 0;
