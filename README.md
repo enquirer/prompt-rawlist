@@ -1,6 +1,6 @@
-# prompt-rawlist [![NPM version](https://img.shields.io/npm/v/prompt-rawlist.svg?style=flat)](https://www.npmjs.com/package/prompt-rawlist) [![NPM monthly downloads](https://img.shields.io/npm/dm/prompt-rawlist.svg?style=flat)](https://npmjs.org/package/prompt-rawlist)  [![NPM total downloads](https://img.shields.io/npm/dt/prompt-rawlist.svg?style=flat)](https://npmjs.org/package/prompt-rawlist)
+# prompt-rawlist [![NPM version](https://img.shields.io/npm/v/prompt-rawlist.svg?style=flat)](https://www.npmjs.com/package/prompt-rawlist) [![NPM monthly downloads](https://img.shields.io/npm/dm/prompt-rawlist.svg?style=flat)](https://npmjs.org/package/prompt-rawlist)  [![NPM total downloads](https://img.shields.io/npm/dt/prompt-rawlist.svg?style=flat)](https://npmjs.org/package/prompt-rawlist) [![Linux Build Status](https://img.shields.io/travis/enquirer/prompt-rawlist.svg?style=flat&label=Travis)](https://travis-ci.org/enquirer/prompt-rawlist)
 
-> Rawlist prompt. Can be used as a standalone prompt, or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer).
+> Rawlist prompt. Can be used as a standalone prompt, or with a prompt system like [Enquirer].
 
 ![prompt-rawlist example](https://raw.githubusercontent.com/enquirer/prompt-rawlist/master/example.gif)
 
@@ -90,8 +90,8 @@ Based on the `rawlist` prompt in inquirer.
 ### Related projects
 
 * [prompt-base](https://www.npmjs.com/package/prompt-base): Base prompt module used for creating custom prompt types for Enquirer. | [homepage](https://github.com/enquirer/prompt-base "Base prompt module used for creating custom prompt types for Enquirer.")
-* [prompt-checkbox](https://www.npmjs.com/package/prompt-checkbox): Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer). | [homepage](https://github.com/enquirer/prompt-checkbox "Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer].")
-* [prompt-confirm](https://www.npmjs.com/package/prompt-confirm): Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer](https://github.com/enquirer/enquirer). | [homepage](https://github.com/enquirer/prompt-confirm "Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer].")
+* [prompt-checkbox](https://www.npmjs.com/package/prompt-checkbox): Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer]. | [homepage](https://github.com/enquirer/prompt-checkbox "Multiple-choice/checkbox prompt. Can be used standalone or with a prompt system like [Enquirer].")
+* [prompt-confirm](https://www.npmjs.com/package/prompt-confirm): Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer]. | [homepage](https://github.com/enquirer/prompt-confirm "Confirm (yes/no) prompt. Can be used standalone or with a prompt system like [Enquirer].")
 * [prompt-list](https://www.npmjs.com/package/prompt-list): List-style prompt. Can be used as a standalone prompt, or with a prompt system like… [more](https://github.com/enquirer/prompt-list) | [homepage](https://github.com/enquirer/prompt-list "List-style prompt. Can be used as a standalone prompt, or with a prompt system like [Enquirer].")
 * [prompt-question](https://www.npmjs.com/package/prompt-question): Question object, used by Enquirer and prompt plugins. | [homepage](https://github.com/enquirer/prompt-question "Question object, used by Enquirer and prompt plugins.")
 * [prompt-radio](https://www.npmjs.com/package/prompt-radio): Radio prompt. This prompt behaves like other radio-button interfaces, where only one choice is enabled… [more](https://github.com/enquirer/prompt-radio) | [homepage](https://github.com/enquirer/prompt-radio "Radio prompt. This prompt behaves like other radio-button interfaces, where only one choice is enabled whilst all others are disabled. Can be used as a standalone prompt, or with a prompt system like [Enquirer].")
@@ -102,10 +102,10 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ### Running tests
 
-Install dev dependencies:
+Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
 
 ```sh
-$ npm install -d && npm test
+$ npm install && npm test
 ```
 
 ### Author
@@ -113,13 +113,13 @@ $ npm install -d && npm test
 **Jon Schlinkert**
 
 * [github/jonschlinkert](https://github.com/jonschlinkert)
-* [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
+* [twitter/jonschlinkert](https://twitter.com/jonschlinkert)
 
 ### License
 
-Copyright © 2016, [Jon Schlinkert](https://github.com/jonschlinkert).
-Released under the [MIT license](https://github.com/enquirer/prompt-rawlist/blob/master/LICENSE).
+Copyright © 2017, [Jon Schlinkert](https://github.com/jonschlinkert).
+Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.2.0, on December 07, 2016._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.5.0, on April 12, 2017._
