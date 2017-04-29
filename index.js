@@ -1,10 +1,11 @@
 'use strict';
 
 var util = require('util');
-var log = require('log-utils');
 var Prompt = require('prompt-base');
 var Paginator = require('terminal-paginator');
 var isNumber = require('is-number');
+var cyan = require('ansi-cyan');
+var red = require('ansi-red');
 
 /**
  * Constructor
@@ -60,11 +61,11 @@ RawList.prototype.ask = function(cb) {
  */
 
 RawList.prototype.render = function(error) {
-  var append = error ? (append = '\n' + log.red('>> ') + error) : '';
+  var append = error ? (append = '\n' + red('>> ') + error) : '';
   var message = this.message;
 
   if (this.status === 'answered') {
-    message += log.cyan(this.answer);
+    message += cyan(this.answer);
   } else {
     var choicesStr = renderChoices(this.question.choices.items, this.selected);
     message += this.paginator.paginate(choicesStr, this.selected, this.options.pageSize);
@@ -144,7 +145,7 @@ function renderChoices(choices, idx) {
     var num = i - separatorOffset;
     var display = formatNumber(num, choice.name);
     if (num === idx) {
-      display = log.cyan(display);
+      display = cyan(display);
     }
     output += display;
   });

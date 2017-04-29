@@ -18,21 +18,22 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.0"
   },
   "scripts": {
     "test": "mocha"
   },
   "dependencies": {
+    "ansi-cyan": "^0.1.1",
+    "ansi-red": "^0.1.1",
     "is-number": "^3.0.0",
-    "log-utils": "^0.2.1",
-    "prompt-base": "^0.6.0",
+    "prompt-base": "^0.6.1",
     "terminal-paginator": "^0.2.1"
   },
   "devDependencies": {
     "enquirer": "^0.4.1",
     "gulp-format-md": "^0.1.12",
-    "mocha": "^3.2.0"
+    "mocha": "^3.3.0"
   },
   "keywords": [
     "answer",
@@ -84,9 +85,6 @@
         "prompt-radio"
       ]
     },
-    "reflinks": [
-
-    ],
     "lint": {
       "reflinks": true
     }
