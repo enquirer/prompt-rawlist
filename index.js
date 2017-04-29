@@ -15,8 +15,8 @@ function RawList(question, answers, rl) {
   if (!(this instanceof RawList)) {
     return new RawList(question, answers, rl);
   }
-  Prompt.apply(this, arguments);
 
+  Prompt.apply(this, arguments);
   if (!this.choices) {
     throw new TypeError('expected "options.choices" to be an object or array');
   }
@@ -40,7 +40,7 @@ function RawList(question, answers, rl) {
  * Inherit `Prompt`
  */
 
-util.inherits(RawList, Prompt);
+Prompt.extend(RawList);
 
 /**
  * Start the prompt session
