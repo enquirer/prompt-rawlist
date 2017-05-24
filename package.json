@@ -5,8 +5,8 @@
   "homepage": "https://github.com/enquirer/prompt-rawlist",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "contributors": [
-    "Brian Woodward <brian.woodward@gmail.com> (https://twitter.com/doowb)",
-    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)"
+    "Brian Woodward (https://twitter.com/doowb)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)"
   ],
   "repository": "enquirer/prompt-rawlist",
   "bugs": {
@@ -25,15 +25,15 @@
   },
   "dependencies": {
     "ansi-cyan": "^0.1.1",
+    "ansi-dim": "^0.1.1",
     "ansi-red": "^0.1.1",
     "is-number": "^3.0.0",
-    "prompt-base": "^0.6.1",
-    "terminal-paginator": "^0.2.1"
+    "prompt-list": "^2.0.0"
   },
   "devDependencies": {
     "enquirer": "^0.4.1",
     "gulp-format-md": "^0.1.12",
-    "mocha": "^3.3.0"
+    "mocha": "^3.4.1"
   },
   "keywords": [
     "answer",
