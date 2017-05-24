@@ -1,9 +1,9 @@
 'use strict';
 
 var util = require('util');
-var Prompt = require('prompt-base');
-var Paginator = require('terminal-paginator');
+var Prompt = require('prompt-list');
 var isNumber = require('is-number');
+var dim = require('ansi-dim');
 var cyan = require('ansi-cyan');
 var red = require('ansi-red');
 
@@ -12,28 +12,53 @@ var red = require('ansi-red');
  */
 
 function RawList(question, answers, rl) {
-  if (!(this instanceof RawList)) {
-    return new RawList(question, answers, rl);
-  }
-
   Prompt.apply(this, arguments);
-  if (!this.choices) {
-    throw new TypeError('expected "options.choices" to be an object or array');
+  var prompt = this;
+
+  var footer = dim('\n(Move up and down to reveal more choices)');
+  this.errorMessage = '>> Please enter a valid index';
+  this.choices.paginator.footer = '';
+  this.rawDefault = 0;
+
+  if (this.choices.isValidIndex(this.question.default)) {
+    this.position = this.rawDefault = Number(this.question.default);
+    this.question.default = null;
   }
 
-  this.selected = 0;
-  this.question.validate = function(val) {
-    return val != null;
+  if (typeof this.options.validate !== 'function') {
+    this.options.validate = function(val) {
+      if (this.status !== 'submitted') {
+        return true;
+      }
+      return val != null;
+    };
+  }
+
+  this.on('render', function(render) {
+    if (render.status !== 'answered') {
+      render.message += '\n  Answer: ' + prompt.rl.line;
+      render.message += footer;
+    }
+    if (render.status === 'interacted') {
+      footer = '';
+    }
+  });
+
+  this.action('number', function(pos) {
+    if (prompt.rl.line === '') {
+      return this.position(pos);
+    }
+    var n = Number(prompt.rl.line) - 1;
+    if (this.choices.isValidIndex(n)) {
+      return n;
+    }
+    return -1;
+  });
+
+  this.choices.options.format = function(line) {
+    line = this.index + 1 + ') ' + line;
+    return this.position === this.index ? cyan(line) : line;
   };
-
-  var idx = this.question.default;
-  if (isNumber(idx) && idx >= 0 && idx < this.question.choices.realLength) {
-    this.selected = idx;
-  }
-
-  // Make sure no default is set (so it won't be printed)
-  this.question.default = null;
-  this.paginator = new Paginator();
 }
 
 /**
@@ -42,122 +67,40 @@ function RawList(question, answers, rl) {
 
 Prompt.extend(RawList);
 
-/**
- * Start the prompt session
- * @param  {Function} `cb` Callback when prompt is finished
- * @return {Object} Returns the `RawList` instance
- */
-
-RawList.prototype.ask = function(cb) {
-  this.callback = cb;
-  this.only('line', this.onEnter.bind(this));
-  this.only('keypress', this.onKeypress.bind(this));
-  this.render();
-  return this;
-};
-
-/**
- * Render the prompt to the terminal
- */
-
-RawList.prototype.render = function(error) {
-  var append = error ? (append = '\n' + red('>> ') + error) : '';
-  var message = this.message;
-
-  if (this.status === 'answered') {
-    message += cyan(this.answer);
-  } else {
-    var choicesStr = renderChoices(this.question.choices.items, this.selected);
-    message += this.paginator.paginate(choicesStr, this.selected, this.options.pageSize);
-    message += '\n  Answer: ';
+RawList.prototype.getAnswer = function(input, key) {
+  if (!key || key.name !== 'line') {
+    return null;
   }
 
-  message += this.rl.line;
-  this.ui.render(message, append);
-};
-
-/**
- * When user presses a key
- */
-
-RawList.prototype.onKeypress = function() {
-  var idx = this.rl.line.length ? Number(this.rl.line) - 1 : 0;
-  if (this.question.choices.getChoice(idx)) {
-    this.selected = idx;
-  } else {
-    this.selected = undefined;
-    this.render('invalid option');
-    return;
+  if (key && key.name === 'number') {
+    input = Number(key.value) - 1;
   }
-  this.render();
-};
 
-/**
- * When user presses the `enter` key
- */
-
-RawList.prototype.onEnter = function(idx) {
-  var input = this.question.choices.getChoice(idx - 1);
-  if (typeof input === 'undefined' || input.value === 'help' || !input.value) {
-    return this.onError(input);
-  }
-  this.answer = this.getAnswer(input);
-  this.status = 'answered';
-  this.submitAnswer();
-};
-
-/**
- * When `error` is emitted.
- */
-
-RawList.prototype.onError = function() {
-  this.render('Please enter a valid index');
-};
-
-/**
- * Get the answer value.
- */
-
-RawList.prototype.getAnswer = function(input) {
-  return input.value;
-};
-
-/**
- * Function for rendering checkbox choices
- * @param {Array} `choices` Array of choice objects
- * @param {Number} `idx` Position of the pointer
- * @return {String} Rendered content
- */
-
-function renderChoices(choices, idx) {
-  var separatorOffset = 0;
-  var output = '';
-
-  choices.forEach(function(choice, i) {
-    output += '\n  ';
-
-    if (choice.type === 'separator') {
-      separatorOffset++;
-      output += ' ' + choice;
-      return;
+  if (key && key.name === 'line') {
+    if (key.value === '') {
+      input = this.position;
+    } else if (isNumber(key.value)) {
+      input = Number(key.value) - 1;
+    } else if (input.trim()) {
+      return (this.answer = this.choices.key(input));
     }
+  }
 
-    var num = i - separatorOffset;
-    var display = formatNumber(num, choice.name);
-    if (num === idx) {
-      display = cyan(display);
-    }
-    output += display;
-  });
-  return output;
-}
+  if (input <= this.choices.length && input >= 0) {
+    return (this.answer = this.choices.key(input));
+  }
+};
+
+RawList.prototype.renderAnswer = function(input) {
+  return cyan(this.answer);
+};
 
 /**
- * Format the list numbers: "1) foo"
+ * Get selected list item
  */
 
-function formatNumber(idx, choiceName) {
-  return (idx + 1) + ') ' + choiceName;
+function isValidNumber(n, max) {
+  return n !== '' && n <= max && n >= 1;
 }
 
 /**
