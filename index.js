@@ -1,10 +1,9 @@
 'use strict';
 
-var util = require('util');
 var Prompt = require('prompt-list');
 var isNumber = require('is-number');
-var dim = require('ansi-dim');
 var cyan = require('ansi-cyan');
+var dim = require('ansi-dim');
 var red = require('ansi-red');
 
 /**
@@ -16,7 +15,7 @@ function RawList(question, answers, rl) {
   var prompt = this;
 
   var footer = dim('\n(Move up and down to reveal more choices)');
-  this.errorMessage = '>> Please enter a valid index';
+  this.errorMessage = red('  >> Please enter a valid index');
   this.choices.paginator.footer = '';
   this.rawDefault = 0;
 
@@ -67,6 +66,20 @@ function RawList(question, answers, rl) {
 
 Prompt.extend(RawList);
 
+/**
+ * Render the answer value
+ */
+
+RawList.prototype.renderAnswer = function(input) {
+  return cyan(this.answer);
+};
+
+/**
+ * Get the selected answer
+ * @param {String} `input`
+ * @param {Object} `key`
+ */
+
 RawList.prototype.getAnswer = function(input, key) {
   if (!key || key.name !== 'line') {
     return null;
@@ -90,18 +103,6 @@ RawList.prototype.getAnswer = function(input, key) {
     return (this.answer = this.choices.key(input));
   }
 };
-
-RawList.prototype.renderAnswer = function(input) {
-  return cyan(this.answer);
-};
-
-/**
- * Get selected list item
- */
-
-function isValidNumber(n, max) {
-  return n !== '' && n <= max && n >= 1;
-}
 
 /**
  * Module exports
