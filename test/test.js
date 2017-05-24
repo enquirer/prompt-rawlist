@@ -4,7 +4,7 @@ require('mocha');
 var assert = require('assert');
 var Prompt = require('..');
 
-describe('prompt-list', function() {
+describe('prompt-rawlist', function() {
   it('should export a function', function() {
     assert.equal(typeof Prompt, 'function');
   });
@@ -14,30 +14,17 @@ describe('prompt-list', function() {
     assert(prompt instanceof Prompt);
   });
 
-  it('should intantiate without new', function() {
-    var prompt = Prompt({name: 'foo', choices: ['foo', 'bar']});
-    assert(prompt instanceof Prompt);
-  });
-
-  it('should throw an error when invalid args are passed', function(cb) {
-    try {
+  it('should throw an error when invalid args are passed', function() {
+    assert.throws(function() {
       Prompt();
-      cb(new Error('expected an error'));
-    } catch (err) {
-      assert(err);
-      assert.equal(err.message, 'expected question to be a string or object');
-      cb();
-    }
-  });
+    });
 
-  it('should throw an error when `choices` are not passed on the `options`', function(cb) {
-    try {
-      Prompt({name: 'foo'});
-      cb(new Error('expected an error'));
-    } catch (err) {
-      assert(err);
-      assert.equal(err.message, 'expected "options.choices" to be an object or array');
-      cb();
-    }
+    assert.throws(function() {
+      Prompt(new Prompt({name: 'foo'}));
+    });
+
+    assert.throws(function() {
+      new Prompt();
+    });
   });
 });
