@@ -18,7 +18,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=4.0"
+    "node": ">=5.0"
   },
   "scripts": {
     "test": "mocha"
@@ -28,12 +28,12 @@
     "ansi-dim": "^0.1.1",
     "ansi-red": "^0.1.1",
     "is-number": "^3.0.0",
-    "prompt-list": "^2.0.0"
+    "prompt-list": "^2.0.1"
   },
   "devDependencies": {
-    "enquirer": "^0.4.1",
+    "enquirer": "^1.0.2",
     "gulp-format-md": "^0.1.12",
-    "mocha": "^3.4.1"
+    "mocha": "^3.4.2"
   },
   "keywords": [
     "answer",
