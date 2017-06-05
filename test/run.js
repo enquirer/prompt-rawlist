@@ -21,17 +21,15 @@ describe('.run', function() {
     unmute();
   });
 
-  it('should return an answers object on run', function(cb) {
+  it('should return an answers object on run', function() {
     prompt.on('ask', function() {
       prompt.rl.input.emit('keypress', '1');
       prompt.rl.input.emit('keypress', '\n');
     });
 
-    prompt.run()
+    return prompt.run()
       .then(function(answer) {
         assert.deepEqual(answer, 'red');
-        cb();
       })
-      .catch(cb)
   });
 });

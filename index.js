@@ -14,18 +14,20 @@ function RawList(question, answers, rl) {
   Prompt.apply(this, arguments);
   var prompt = this;
 
-  var footer = dim('\n(Move up and down to reveal more choices)');
-  this.errorMessage = red('  >> Please enter a valid index');
   this.choices.paginator.footer = '';
+  this.options.footer = dim('\n(Move up and down to reveal more choices)');
+  this.errorMessage = red('  >> Please enter a valid index');
   this.rawDefault = 0;
 
   if (this.choices.isValidIndex(this.question.default)) {
     this.position = this.rawDefault = Number(this.question.default);
     this.question.default = null;
+    this.initialDefault = null;
   }
 
   if (typeof this.options.validate !== 'function') {
     this.options.validate = function(val) {
+      this.rl.history = [];
       if (this.status !== 'submitted') {
         return true;
       }
@@ -33,13 +35,13 @@ function RawList(question, answers, rl) {
     };
   }
 
-  this.on('render', function(render) {
-    if (render.status !== 'answered') {
-      render.message += '\n  Answer: ' + prompt.rl.line;
-      render.message += footer;
+  this.on('render', function(context) {
+    if (context.status !== 'answered') {
+      context.message += '\n  Answer: ' + prompt.rl.line;
+      context.message += prompt.options.footer;
     }
-    if (render.status === 'interacted') {
-      footer = '';
+    if (context.status === 'interacted') {
+      prompt.options.footer = '';
     }
   });
 
@@ -81,14 +83,6 @@ RawList.prototype.renderAnswer = function(input) {
  */
 
 RawList.prototype.getAnswer = function(input, key) {
-  if (!key || key.name !== 'line') {
-    return null;
-  }
-
-  if (key && key.name === 'number') {
-    input = Number(key.value) - 1;
-  }
-
   if (key && key.name === 'line') {
     if (key.value === '') {
       input = this.position;
@@ -97,10 +91,10 @@ RawList.prototype.getAnswer = function(input, key) {
     } else if (input.trim()) {
       return (this.answer = this.choices.key(input));
     }
-  }
 
-  if (input <= this.choices.length && input >= 0) {
-    return (this.answer = this.choices.key(input));
+    if (input <= this.choices.length && input >= 0) {
+      return (this.answer = this.choices.key(input));
+    }
   }
 };
 
